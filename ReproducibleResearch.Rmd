@@ -1,12 +1,11 @@
 ---
-title: "Reproducible Research: Peer Assessment 1"
-output: 
+title: "ReproductiveResearch1"
+output:
   html_document:
-    keep_md: true
+    df_print: paged
+  pdf_document: default
+  word_document: default
 ---
-
-
-## Loading and preprocessing the data
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
@@ -42,8 +41,6 @@ hist(steps_by_day$steps, main = "Total Steps Each Day", col = "aquamarine", xlab
 
 ```
 
-## What is mean total number of steps taken per day?
-
 ### Mean and median number of steps taken each day
 
 ```{r meanmedian, include=TRUE, echo = TRUE}
@@ -54,9 +51,6 @@ rmedian <- median(steps_by_day$steps)
 cat("The median of the data is ", rmedian)
 
 ```
-
-
-## What is the average daily activity pattern?
 
 ### Time series plot of the average number of steps taken
 
@@ -77,9 +71,6 @@ cat("The maximum interval is: ", max_interval)
 
 ```
 
-
-## Imputing missing values
-
 ### Code to describe and show a strategy for imputing missing data
 
 ```{r stratimpu, include=TRUE, echo = TRUE}
@@ -90,6 +81,7 @@ imputed_data <- transform(data, steps = ifelse(is.na(data$steps), steps_by_inter
 imputed_data[as.character(imputed_data$date) == "2012-10-01", 1] <- 0
 
 ```
+
 ### Histogram of the total number of steps taken each day after missing values are imputed
 
 ```{r histsteps, include=TRUE, echo = TRUE}
@@ -98,9 +90,6 @@ steps_by_day_i <- aggregate(steps ~ date, imputed_data, sum)
 hist(steps_by_day_i$steps, main = "Total Steps Each Day", col="red", xlab = "Number of Steps")
 
 ```
-
-
-## Are there differences in activity patterns between weekdays and weekends?
 
 ### Panel plot comparing the average number of steps taken per 5-minute interval across weekdays and weekends
 
@@ -127,4 +116,6 @@ library(lattice)
 xyplot(steps_by_interval_i$steps ~ steps_by_interval_i$interval|steps_by_interval_i$dow, main="Average Steps per Day by Interval",xlab="Interval", ylab="Steps",layout=c(1,2), type="l")
 
 ```
+
+
 
